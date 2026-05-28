@@ -6,6 +6,12 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/projects/list/')),
-    path('', include('core.urls')),   # ← исправлено
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('', RedirectView.as_view(url='/project/list/', permanent=False)),
+    path('project/list/', RedirectView.as_view(url='/projects/list/', permanent=False)),
+    
+    path('users/', include('users.urls')),
+    path('projects/', include('projects.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
