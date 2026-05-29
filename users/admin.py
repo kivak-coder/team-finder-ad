@@ -10,9 +10,8 @@ class UserAdmin(BaseUserAdmin):
     Настройка админ-панели для кастомной модели User.
     """
     
-    # Поля, которые отображаются в списке пользователей
     list_display = (
-        'id',             # Используем ID вместо date_joined
+        'id',
         'email', 
         'name', 
         'surname', 
@@ -22,14 +21,12 @@ class UserAdmin(BaseUserAdmin):
         'is_staff',
     )
     
-    # Поля, по которым можно фильтровать список справа
     list_filter = (
         'is_active', 
         'is_staff', 
         'is_superuser',
     )
     
-    # Поля, по которым работает поиск вверху страницы
     search_fields = (
         'email', 
         'name', 
@@ -37,16 +34,12 @@ class UserAdmin(BaseUserAdmin):
         'phone',
     )
     
-    # Сортировка по умолчанию (сначала новые — по убыванию ID)
     ordering = ('-id',)
     
-    # Поля, которые можно редактировать прямо в списке
     list_editable = ('is_active', 'is_staff')
     
-    # Поля, доступные только для чтения
     readonly_fields = ('avatar_preview', 'last_login')
     
-    # Разбивка полей на вкладки/секции в форме редактирования
     fieldsets = (
         ('🔐 Авторизация', {
             'fields': ('email', 'password')
@@ -61,12 +54,11 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')
         }),
         ('📅 Системная информация', {
-            'fields': ('last_login',), # date_joined убран, так как его нет в модели
+            'fields': ('last_login',),
             'classes': ('collapse',)
         }),
     )
     
-    # Поля для формы создания нового пользователя
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -77,7 +69,6 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
     
-    # Кастомный метод для отображения миниатюры аватара в списке
     def avatar_preview(self, obj):
         if obj.avatar and hasattr(obj.avatar, 'url'):
             return format_html(
