@@ -1,7 +1,10 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from team_finder.constants import (
+    PROJECTS_PER_PAGE,
+)
 
 
-def paginate_queryset(request, queryset, per_page=12):
+def paginate_queryset(request, queryset, per_page=PROJECTS_PER_PAGE):
     paginator = Paginator(queryset, per_page)
     page_number = request.GET.get('page')
 

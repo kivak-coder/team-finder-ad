@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+
 from .models import Project
 
 
@@ -29,7 +30,6 @@ class ProjectAdmin(admin.ModelAdmin):
         'owner__surname',
     )
 
-    ordering = ('-created_at',)
     list_editable = ('status',)
     readonly_fields = ('created_at', 'owner')
     fieldsets = (
@@ -53,10 +53,11 @@ class ProjectAdmin(admin.ModelAdmin):
 
     filter_horizontal = ('participants',)
 
+    @admin.display(description='Участников')
     def participants_count(self, obj):
         return obj.participants.count()
-    participants_count.short_description = 'Участников'
 
+    @admin.display(description='GitHub')
     def github_link(self, obj):
         if obj.github_url:
             return format_html(
@@ -64,7 +65,6 @@ class ProjectAdmin(admin.ModelAdmin):
                 obj.github_url
             )
         return '—'
-    github_link.short_description = 'GitHub'
 
     @admin.action(description='Закрыть выбранные проекты',
                   permissions=['change'])

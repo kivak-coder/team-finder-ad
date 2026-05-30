@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+
 from core.mixins import GitHubURLMixin
 from .models import User
 

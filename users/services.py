@@ -1,6 +1,8 @@
 import random
 from io import BytesIO
+
 from PIL import Image, ImageDraw, ImageFont
+
 from django.core.files.base import ContentFile
 from team_finder.constants import (
     AvatarColor,
@@ -19,10 +21,7 @@ def generate_avatar(name: str) -> ContentFile:
     try:
         font = ImageFont.truetype("arial.ttf", font_size)
     except IOError:
-        try:
-            font = ImageFont.load_default(size=font_size)
-        except TypeError:
-            font = ImageFont.load_default()
+        font = ImageFont.load_default(size=font_size)
     bbox = draw.textbbox((0, 0), letter, font=font)
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]

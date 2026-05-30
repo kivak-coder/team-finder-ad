@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+
 from django.urls import reverse
+
 from .managers import UserManager
 from team_finder.constants import (
     USER_NAME_MAX_LENGTH,

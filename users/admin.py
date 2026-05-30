@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
+
 from .models import User
 
 
@@ -66,11 +67,13 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
 
-    def avatar_preview(self, obj):
-        if obj.avatar and hasattr(obj.avatar, 'url'):
-            return format_html(
-                '<img src="{}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">',
-                obj.avatar.url
-            )
-        return '—'
-    avatar_preview.short_description = 'Аватар'
+
+@admin.display(description='Аватар')
+def avatar_preview(self, obj):
+    if obj.avatar and hasattr(obj.avatar, 'url'):
+        return format_html(
+            '<img src="{}" style="width: 40px; height: 40px; '
+            'border-radius: 50%; object-fit: cover;">',
+            obj.avatar.url
+        )
+    return '—'

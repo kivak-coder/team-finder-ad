@@ -1,5 +1,6 @@
 from django import forms
 from core.mixins import GitHubURLMixin
+
 from .models import Project
 
 
